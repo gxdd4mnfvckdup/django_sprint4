@@ -1,12 +1,11 @@
 from datetime import datetime
 
-from attr.filters import exclude
-from django.contrib.admin.templatetags.admin_list import pagination
+
+from django import forms
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
-from django.forms import ModelForm
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
@@ -217,9 +216,14 @@ class PostDetailView(DetailView):
         return context
 
 
+class EditPostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        exclude = ('author',)
+
 class EditPostView(LoginRequiredMixin, UpdateView):
     model = Post
-    fields = '__all__'
+    form_class = EditPostForm
     template_name = 'blog/create.html'
     pk_url_kwarg = 'id'
     context_object_name = 'post'
