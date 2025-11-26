@@ -13,10 +13,10 @@ from django.views.generic import TemplateView
 #     return render(request, template_name)
 
 class AboutView(TemplateView):
-    template_name = 'about.html'
+    template_name = 'pages/about.html'
 
 class RulesView(TemplateView):
-    template_name = 'rules.html'
+    template_name = 'pages/rules.html'
 
 def handler403(request, exception):
     return render(request, 'pages/403csrf.html', status=403)
